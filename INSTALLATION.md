@@ -56,11 +56,12 @@ The extension creates the following folder structure:
 
 ```
 <your-folder-name>/
-├── app/
+├── src/
 │   ├── __init__.py          # Package initialization
-│   ├── model.py             # Data models and business logic
-│   ├── controller.py        # Request handling and routing
-│   └── presenter.py         # Response formatting
+│   ├── server.py            # Main MCP server implementation
+│   ├── resources.py         # Data resources and content
+│   ├── tools.py             # Tool implementations
+│   └── prompts.py           # Prompt templates
 ├── main.py                  # Entry point with examples
 └── requirements.txt         # Python dependencies
 ```
@@ -69,7 +70,7 @@ The extension creates the following folder structure:
 
 - ✅ **Interactive Naming**: Validates folder names and prevents conflicts
 - ✅ **Complete Structure**: Creates all necessary files with working code
-- ✅ **MVC Pattern**: Implements Model-Controller-Presenter architecture
+- ✅ **MCP Server**: Implements Model Context Protocol server with FastMCP
 - ✅ **Ready to Run**: Generated code includes examples and can be executed immediately
 - ✅ **Cross-Platform**: Works on Windows, macOS, and Linux
 - ✅ **VS Code & Cursor**: Compatible with both editors
@@ -168,11 +169,12 @@ For issues or questions:
 
 ```
 <您的文件夹名称>/
-├── app/
+├── src/
 │   ├── __init__.py          # 包初始化
-│   ├── model.py             # 数据模型和业务逻辑
-│   ├── controller.py        # 请求处理和路由
-│   └── presenter.py         # 响应格式化
+│   ├── server.py            # 主要MCP服务器实现
+│   ├── resources.py         # 数据资源和内容
+│   ├── tools.py             # 工具实现
+│   └── prompts.py           # 提示模板
 ├── main.py                  # 带有示例的入口点
 └── requirements.txt         # Python依赖项
 ```
@@ -181,7 +183,7 @@ For issues or questions:
 
 - ✅ **交互式命名**: 验证文件夹名称并防止冲突
 - ✅ **完整结构**: 创建所有必要的文件和工作代码
-- ✅ **MVC模式**: 实现模型-控制器-展示器架构
+- ✅ **MCP服务器**: 使用FastMCP实现模型上下文协议服务器
 - ✅ **即用即行**: 生成的代码包含示例并可立即执行
 - ✅ **跨平台**: 在Windows、macOS和Linux上工作
 - ✅ **VS Code & Cursor**: 与两个编辑器兼容
