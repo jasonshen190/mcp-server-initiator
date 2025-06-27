@@ -18,6 +18,12 @@
    - Type "Create MCP Server" and select the command
    - Enter a folder name when prompted
 
+3. **Test the Generated Server**
+   ```bash
+   cd <your-folder-name>
+   mcp dev main.py
+   ```
+
 ### For Production Use
 
 1. **Package the Extension**
@@ -37,6 +43,12 @@
    - Open Command Palette (`Cmd+Shift+P`)
    - Type "Create MCP Server" and select the command
    - Enter your desired folder name
+
+4. **Test the Generated Server**
+   ```bash
+   cd <your-folder-name>
+   mcp dev main.py
+   ```
 
 ## Generated Structure
 
@@ -118,6 +130,12 @@ For issues or questions:
    - 输入 "Create MCP Server" 并选择命令
    - 在提示时输入文件夹名称
 
+3. **测试生成的服务器**
+   ```bash
+   cd <您的文件夹名称>
+   mcp dev main.py
+   ```
+
 ### 生产使用
 
 1. **打包扩展**
@@ -137,6 +155,12 @@ For issues or questions:
    - 打开命令面板 (`Cmd+Shift+P`)
    - 输入 "Create MCP Server" 并选择命令
    - 输入您想要的文件夹名称
+
+4. **测试生成的服务器**
+   ```bash
+   cd <您的文件夹名称>
+   mcp dev main.py
+   ```
 
 ## 生成的结构
 

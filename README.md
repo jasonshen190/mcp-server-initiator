@@ -51,8 +51,7 @@ A VS Code extension that creates MCP (Model-Controller-Presenter) server folder 
 
 1. Package the extension:
    ```bash
-   npm install -g vsce
-   vsce package
+   npm run package
    ```
 2. Install the generated `.vsix` file in VS Code or Cursor:
    
@@ -90,6 +89,12 @@ A VS Code extension that creates MCP (Model-Controller-Presenter) server folder 
    - Choose the generated `.vsix` file
    - Click "Install"
    - Reload the editor when prompted
+
+3. **Test the Generated Server**
+   ```bash
+   cd <your-folder-name>
+   mcp dev main.py
+   ```
 
 ## Usage
 
@@ -222,8 +227,7 @@ MIT License - see LICENSE file for details
 
 1. 打包扩展：
    ```bash
-   npm install -g vsce
-   vsce package
+   npm run package
    ```
 2. 在VS Code或Cursor中安装生成的 `.vsix` 文件：
    
@@ -261,6 +265,12 @@ MIT License - see LICENSE file for details
    - 选择生成的 `.vsix` 文件
    - 点击 "Install"
    - 提示时重新加载编辑器
+
+3. **Test the Generated Server**
+   ```bash
+   cd <your-folder-name>
+   mcp dev main.py
+   ```
 
 ## 使用方法
 
