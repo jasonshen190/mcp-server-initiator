@@ -4,4 +4,5 @@ node_modules
 *.vsix
 .DS_Store
 *.log
-linkedin_post.md 
+linkedin_post.md
+*.txt
