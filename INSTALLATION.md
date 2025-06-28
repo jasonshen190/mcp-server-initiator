@@ -20,8 +20,8 @@
 
 3. **Test the Generated Server**
    ```bash
-   cd <your-folder-name>
-   mcp dev main.py
+   cd <your-folder-name>/src
+   python setup_and_run.py
    ```
 
 ### For Production Use
@@ -46,8 +46,8 @@
 
 4. **Test the Generated Server**
    ```bash
-   cd <your-folder-name>
-   mcp dev main.py
+   cd <your-folder-name>/src
+   python setup_and_run.py
    ```
 
 ## Generated Structure
@@ -57,23 +57,76 @@ The extension creates the following folder structure:
 ```
 <your-folder-name>/
 ├── src/
-│   ├── __init__.py          # Package initialization
-│   ├── server.py            # Main MCP server implementation
-│   ├── resources.py         # Data resources and content
-│   ├── tools.py             # Tool implementations
-│   └── prompts.py           # Prompt templates
-├── main.py                  # Entry point with examples
-└── requirements.txt         # Python dependencies
+│   ├── demo_server.py       # Main MCP server implementation with FastMCP
+│   ├── setup_and_run.py     # Interactive setup and run script
+│   ├── test_client.py       # Comprehensive test client
+│   ├── mcp.json            # MCP server configuration
+│   └── README.md           # Server documentation
+├── main.py                 # Alternative entry point
+└── requirements.txt        # Python dependencies (FastAPI, uvicorn, pydantic)
 ```
 
 ## Features
 
 - ✅ **Interactive Naming**: Validates folder names and prevents conflicts
 - ✅ **Complete Structure**: Creates all necessary files with working code
-- ✅ **MCP Server**: Implements Model Context Protocol server with FastMCP
+- ✅ **FastMCP Framework**: Modern, decorator-based MCP server implementation
+- ✅ **HTTP Transport**: Uses streamable-http for easy testing and development
 - ✅ **Ready to Run**: Generated code includes examples and can be executed immediately
+- ✅ **Built-in Testing**: Comprehensive test client for immediate validation
+- ✅ **Setup Script**: Interactive setup with dependency management
 - ✅ **Cross-Platform**: Works on Windows, macOS, and Linux
 - ✅ **VS Code & Cursor**: Compatible with both editors
+
+## Server Capabilities
+
+### Tools Available
+- **Mathematical Operations**: Add, multiply, BMI calculation
+- **Weather Data**: Simulated weather information for cities
+- **Text Formatting**: Uppercase, lowercase, title case, reverse
+- **Time Functions**: Current time in specified timezones
+
+### Resources Available
+- **Configuration**: Server configuration and status
+- **Greetings**: Personalized greeting messages
+- **Server Info**: Detailed server capabilities
+- **Math Constants**: π, e, golden ratio, √2
+
+### Prompts Available
+- **Calculator Assistant**: Help with mathematical operations
+- **Weather Assistant**: Weather-related queries
+- **Text Formatter**: Text formatting assistance
+
+## Running Options
+
+### Option 1: Interactive Setup (Recommended)
+```bash
+cd <your-folder-name>/src
+python setup_and_run.py
+```
+This provides a menu with options to:
+- Run the server only
+- Run the test client only
+- Run both (server in background, then test client)
+- Exit
+
+### Option 2: Direct Server Run
+```bash
+cd <your-folder-name>/src
+python demo_server.py
+```
+
+### Option 3: Main Entry Point
+```bash
+cd <your-folder-name>
+python main.py
+```
+
+### Option 4: Test Client Only
+```bash
+cd <your-folder-name>/src
+python test_client.py
+```
 
 ## Troubleshooting
 
@@ -91,6 +144,15 @@ The extension creates the following folder structure:
    - Make sure the extension is properly installed
    - Try reloading VS Code/Cursor (`Cmd+Shift+P` → "Developer: Reload Window")
 
+4. **Python dependencies not found**
+   - Run the setup script: `python setup_and_run.py`
+   - It will automatically install required dependencies
+
+5. **Server won't start**
+   - Check if port 8000 is available
+   - The server runs on `http://127.0.0.1:8000/mcp`
+   - Use `python setup_and_run.py` for automatic dependency installation
+
 ### Development Issues
 
 1. **TypeScript errors**
@@ -102,12 +164,17 @@ The extension creates the following folder structure:
    - Check the Developer Console for errors
    - Ensure all dependencies are installed: `npm install`
 
+3. **Test client fails**
+   - Make sure the server is running first
+   - Check that the server is accessible at `http://127.0.0.1:8000/mcp`
+
 ## Support
 
 For issues or questions:
 1. Check the README.md for detailed documentation
 2. Review the generated code structure
-3. Test with the provided examples in `main.py`
+3. Test with the provided examples using `python setup_and_run.py`
+4. Check the server logs for error messages
 
 ---
 
@@ -133,8 +200,8 @@ For issues or questions:
 
 3. **测试生成的服务器**
    ```bash
-   cd <您的文件夹名称>
-   mcp dev main.py
+   cd <您的文件夹名称>/src
+   python setup_and_run.py
    ```
 
 ### 生产使用
@@ -159,8 +226,8 @@ For issues or questions:
 
 4. **测试生成的服务器**
    ```bash
-   cd <您的文件夹名称>
-   mcp dev main.py
+   cd <您的文件夹名称>/src
+   python setup_and_run.py
    ```
 
 ## 生成的结构
@@ -170,23 +237,76 @@ For issues or questions:
 ```
 <您的文件夹名称>/
 ├── src/
-│   ├── __init__.py          # 包初始化
-│   ├── server.py            # 主要MCP服务器实现
-│   ├── resources.py         # 数据资源和内容
-│   ├── tools.py             # 工具实现
-│   └── prompts.py           # 提示模板
-├── main.py                  # 带有示例的入口点
-└── requirements.txt         # Python依赖项
+│   ├── demo_server.py       # 使用FastMCP的主要MCP服务器实现
+│   ├── setup_and_run.py     # 交互式设置和运行脚本
+│   ├── test_client.py       # 综合测试客户端
+│   ├── mcp.json            # MCP服务器配置
+│   └── README.md           # 服务器文档
+├── main.py                 # 替代入口点
+└── requirements.txt        # Python依赖项（FastAPI、uvicorn、pydantic）
 ```
 
 ## 功能特性
 
 - ✅ **交互式命名**: 验证文件夹名称并防止冲突
 - ✅ **完整结构**: 创建所有必要的文件和工作代码
-- ✅ **MCP服务器**: 使用FastMCP实现模型上下文协议服务器
+- ✅ **FastMCP框架**: 现代、基于装饰器的MCP服务器实现
+- ✅ **HTTP传输**: 使用streamable-http进行简单的测试和开发
 - ✅ **即用即行**: 生成的代码包含示例并可立即执行
+- ✅ **内置测试**: 用于立即验证的综合测试客户端
+- ✅ **设置脚本**: 具有依赖项管理的交互式设置
 - ✅ **跨平台**: 在Windows、macOS和Linux上工作
 - ✅ **VS Code & Cursor**: 与两个编辑器兼容
+
+## 服务器功能
+
+### 可用工具
+- **数学运算**: 加法、乘法、BMI计算
+- **天气数据**: 城市模拟天气信息
+- **文本格式化**: 大写、小写、标题大小写、反转
+- **时间函数**: 指定时区的当前时间
+
+### 可用资源
+- **配置**: 服务器配置和状态
+- **问候**: 个性化问候消息
+- **服务器信息**: 详细的服务器功能
+- **数学常数**: π、e、黄金比例、√2
+
+### 可用提示
+- **计算器助手**: 帮助数学运算
+- **天气助手**: 天气相关查询
+- **文本格式化器**: 文本格式化帮助
+
+## 运行选项
+
+### 选项1: 交互式设置（推荐）
+```bash
+cd <您的文件夹名称>/src
+python setup_and_run.py
+```
+这提供了一个菜单，选项包括：
+- 仅运行服务器
+- 仅运行测试客户端
+- 运行两者（后台服务器，然后测试客户端）
+- 退出
+
+### 选项2: 直接运行服务器
+```bash
+cd <您的文件夹名称>/src
+python demo_server.py
+```
+
+### 选项3: 主入口点
+```bash
+cd <您的文件夹名称>
+python main.py
+```
+
+### 选项4: 测试客户端
+```bash
+cd <您的文件夹名称>/src
+python test_client.py
+```
 
 ## 故障排除
 
@@ -200,9 +320,18 @@ For issues or questions:
    - 扩展会询问是否要覆盖
    - 选择 "是" 替换现有文件夹
 
-3. **找不到扩展**
+3. **扩展未找到**
    - 确保扩展已正确安装
    - 尝试重新加载VS Code/Cursor (`Cmd+Shift+P` → "Developer: Reload Window")
+
+4. **Python依赖项未找到**
+   - 运行设置脚本: `python setup_and_run.py`
+   - 它将自动安装所需的依赖项
+
+5. **服务器无法启动**
+   - 检查端口8000是否可用
+   - 服务器运行在 `http://127.0.0.1:8000/mcp`
+   - 使用 `python setup_and_run.py` 进行自动依赖项安装
 
 ### 开发问题
 
@@ -212,12 +341,17 @@ For issues or questions:
    ```
 
 2. **扩展未加载**
-   - 检查开发者控制台是否有错误
-   - 确保所有依赖项已安装: `npm install`
+   - 检查开发者控制台中的错误
+   - 确保所有依赖项都已安装: `npm install`
+
+3. **测试客户端失败**
+   - 确保服务器首先运行
+   - 检查服务器是否可在 `http://127.0.0.1:8000/mcp` 访问
 
 ## 支持
 
-如有问题或疑问：
+对于问题或疑问：
 1. 查看README.md获取详细文档
 2. 查看生成的代码结构
-3. 使用 `main.py` 中提供的示例进行测试 
+3. 使用 `python setup_and_run.py` 测试提供的示例
+4. 检查服务器日志中的错误消息 
