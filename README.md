@@ -38,13 +38,7 @@ cd <your-folder-name>/src
 python demo_server.py
 ```
 
-#### Option 3: Using the Main Entry Point
-```bash
-cd <your-folder-name>
-python main.py
-```
-
-#### Option 4: Test the Server
+#### Option 3: Test the Server
 ```bash
 cd <your-folder-name>/src
 python test_client.py
@@ -65,7 +59,6 @@ python test_client.py
 │   ├── test_client.py       # Test client for the server
 │   ├── mcp.json            # MCP server configuration
 │   └── README.md           # Server documentation
-├── main.py                 # Entry point for the server
 └── requirements.txt        # Python dependencies
 ```
 
@@ -176,10 +169,6 @@ python test_client.py
 - HTTP endpoint configuration
 - Ready for use with MCP clients
 
-### Main Entry Point (`main.py`)
-- Alternative entry point for running the server
-- Proper path handling and imports
-- Error handling and graceful shutdown
 
 ## Server Features
 
@@ -284,7 +273,7 @@ MIT License - see LICENSE file for details
 uv venv
 source .venv/bin/activate
 uv pip install -r requirements.txt
-mcp dev main.py
+mcp dev src/demo_server.py
 ```
 
 ## 生成的结构
@@ -302,7 +291,6 @@ mcp dev main.py
 │   ├── test_client.py       # Test client for the server
 │   ├── mcp.json            # MCP server configuration
 │   └── README.md           # Server documentation
-├── main.py                 # Entry point for the server
 └── requirements.txt        # Python dependencies
 ```
 
@@ -330,10 +318,6 @@ mcp dev main.py
 - Code review prompts
 - Data summary prompts
 
-### Main (`main.py`)
-- Entry point for the MCP server
-- Server initialization and startup
-- Error handling and graceful shutdown
 
 ## Architecture
 

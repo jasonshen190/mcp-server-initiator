@@ -67,7 +67,6 @@ The extension creates the following folder structure:
 │   ├── test_client.py       # Comprehensive test client
 │   ├── mcp.json            # MCP server configuration
 │   └── README.md           # Server documentation
-├── main.py                 # Alternative entry point
 └── requirements.txt        # Python dependencies (FastAPI, uvicorn, pydantic)
 ```
 
@@ -121,13 +120,7 @@ cd <your-folder-name>/src
 python demo_server.py
 ```
 
-### Option 3: Main Entry Point
-```bash
-cd <your-folder-name>
-python main.py
-```
-
-### Option 4: Test Client Only
+### Option 3: Test Client Only
 ```bash
 cd <your-folder-name>/src
 python test_client.py
@@ -252,7 +245,6 @@ For issues or questions:
 │   ├── test_client.py       # 综合测试客户端
 │   ├── mcp.json            # MCP服务器配置
 │   └── README.md           # 服务器文档
-├── main.py                 # 替代入口点
 └── requirements.txt        # Python依赖项（FastAPI、uvicorn、pydantic）
 ```
 
@@ -306,13 +298,7 @@ cd <您的文件夹名称>/src
 python demo_server.py
 ```
 
-### 选项3: 主入口点
-```bash
-cd <您的文件夹名称>
-python main.py
-```
-
-### 选项4: 测试客户端
+### 选项3: 测试客户端
 ```bash
 cd <您的文件夹名称>/src
 python test_client.py
