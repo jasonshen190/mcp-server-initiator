@@ -57,6 +57,11 @@ The extension creates the following folder structure:
 ```
 <your-folder-name>/
 ├── src/
+│   ├── components/
+│   │   ├── __init__.py      # Components package initialization
+│   │   ├── tools.py         # Tool functions and models
+│   │   ├── resources.py     # Resource functions
+│   │   └── prompts.py       # Prompt functions
 │   ├── demo_server.py       # Main MCP server implementation with FastMCP
 │   ├── setup_and_run.py     # Interactive setup and run script
 │   ├── test_client.py       # Comprehensive test client
@@ -237,6 +242,11 @@ For issues or questions:
 ```
 <您的文件夹名称>/
 ├── src/
+│   ├── components/
+│   │   ├── __init__.py      # Components package initialization
+│   │   ├── tools.py         # Tool functions and models
+│   │   ├── resources.py     # Resource functions
+│   │   └── prompts.py       # Prompt functions
 │   ├── demo_server.py       # 使用FastMCP的主要MCP服务器实现
 │   ├── setup_and_run.py     # 交互式设置和运行脚本
 │   ├── test_client.py       # 综合测试客户端

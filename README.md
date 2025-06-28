@@ -55,6 +55,11 @@ python test_client.py
 ```
 <folder-name>/
 ├── src/
+│   ├── components/
+│   │   ├── __init__.py      # Components package initialization
+│   │   ├── tools.py         # Tool functions and models
+│   │   ├── resources.py     # Resource functions
+│   │   └── prompts.py       # Prompt functions
 │   ├── demo_server.py       # Main MCP server implementation
 │   ├── setup_and_run.py     # Setup and run script
 │   ├── test_client.py       # Test client for the server
@@ -287,13 +292,18 @@ mcp dev main.py
 ```
 <文件夹名称>/
 ├── src/
-│   ├── __init__.py
-│   ├── server.py
-│   ├── resources.py
-│   ├── tools.py
-│   └── prompts.py
-├── main.py
-└── requirements.txt
+│   ├── components/
+│   │   ├── __init__.py      # Components package initialization
+│   │   ├── tools.py         # Tool functions and models
+│   │   ├── resources.py     # Resource functions
+│   │   └── prompts.py       # Prompt functions
+│   ├── demo_server.py       # Main MCP server implementation
+│   ├── setup_and_run.py     # Setup and run script
+│   ├── test_client.py       # Test client for the server
+│   ├── mcp.json            # MCP server configuration
+│   └── README.md           # Server documentation
+├── main.py                 # Entry point for the server
+└── requirements.txt        # Python dependencies
 ```
 
 ## 生成的代码功能
