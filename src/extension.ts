@@ -134,7 +134,7 @@ def calculate_bmi(weight_kg: float, height_m: float) -> float:
 
 def get_weather(city: str) -> WeatherData:
     """Get weather information for a city (simulated)"""
-    // This is a simulated weather API
+    # This is a simulated weather API
     weather_data = {
         "New York": WeatherData(temperature=22.5, humidity=65.0, condition="partly cloudy", wind_speed=12.3),
         "London": WeatherData(temperature=15.2, humidity=78.0, condition="rainy", wind_speed=8.7),
@@ -145,7 +145,7 @@ def get_weather(city: str) -> WeatherData:
     if city in weather_data:
         return weather_data[city]
     else:
-        // Return default data for unknown cities
+        # Return default data for unknown cities
         return WeatherData(temperature=20.0, humidity=60.0, condition="unknown", wind_speed=10.0)
 
 
@@ -282,13 +282,13 @@ from components.prompts import (
     calculator_assistant, weather_assistant, text_formatter
 )
 
-// Create the MCP server
+# Create the MCP server
 mcp = FastMCP("${folderName}")
 
 
-// ============================================================================
-// TOOLS
-// ============================================================================
+# ============================================================================
+# TOOLS
+# ============================================================================
 
 @mcp.tool()
 def add_numbers_tool(a: int, b: int) -> int:
@@ -326,9 +326,9 @@ def get_current_time_tool(timezone: str = "UTC") -> str:
     return get_current_time(timezone)
 
 
-// ============================================================================
-// RESOURCES
-// ============================================================================
+# ============================================================================
+# RESOURCES
+# ============================================================================
 
 @mcp.resource("config://app")
 def get_app_config_resource() -> str:
@@ -354,9 +354,9 @@ def get_math_constants_resource() -> str:
     return get_math_constants()
 
 
-// ============================================================================
-// PROMPTS
-// ============================================================================
+# ============================================================================
+# PROMPTS
+# ============================================================================
 
 @mcp.prompt()
 def calculator_assistant_prompt() -> str:
@@ -377,7 +377,7 @@ def text_formatter_prompt() -> str:
 
 
 if __name__ == "__main__":
-    // Run the server on HTTP at 127.0.0.1:8000
+    # Run the server on HTTP at 127.0.0.1:8000
     mcp.run(transport="streamable-http")`;
     fs.writeFileSync(path.join(srcPath, 'demo_server.py'), demoServerContent);
 
@@ -428,16 +428,16 @@ def main():
     print("${folderName} MCP Server Setup")
     print("=" * 30)
     
-    // Check if we're in the right directory
+    # Check if we're in the right directory
     if not os.path.exists("demo_server.py"):
         print("❌ Please run this script from the src/ directory")
         sys.exit(1)
     
-    // Install dependencies
+    # Install dependencies
     if not install_dependencies():
         sys.exit(1)
     
-    // Ask user what they want to do
+    # Ask user what they want to do
     print("\nWhat would you like to do?")
     print("1. Run the server")
     print("2. Run the test client")
@@ -455,16 +455,16 @@ def main():
             break
         elif choice == "3":
             print("\nStarting server in background...")
-            // Start server in background
+            # Start server in background
             server_process = subprocess.Popen([sys.executable, "demo_server.py"])
             try:
-                // Wait a moment for server to start
+                # Wait a moment for server to start
                 import time
                 time.sleep(2)
-                // Run test client
+                # Run test client
                 run_test_client()
             finally:
-                // Stop server
+                # Stop server
                 server_process.terminate()
                 server_process.wait()
             break
@@ -495,76 +495,76 @@ from mcp.client.streamable_http import streamablehttp_client
 async def test_server():
     """Test the ${folderName} MCP server"""
     
-    // Create server parameters for HTTP connection
+    # Create server parameters for HTTP connection
     server_params = StreamableHttpParameters(url="http://127.0.0.1:8000/mcp")
     
-    // Connect to the server via streamable-http
+    # Connect to the server via streamable-http
     async with streamablehttp_client(server_params.url) as (read, write, _):
         async with ClientSession(read, write) as session:
             
-            // Initialize the connection
+            # Initialize the connection
             await session.initialize()
             
             print("Connected to ${folderName} MCP Server!")
             print("=" * 50)
             
-            // Test tools
+            # Test tools
             print("\n1. Testing Tools:")
             print("-" * 20)
             
-            // Test add_numbers tool
+            # Test add_numbers tool
             result = await session.call_tool("add_numbers_tool", {"a": 5, "b": 3})
             print(f"add_numbers_tool(5, 3) = {result.content[0].text}")
             
-            // Test multiply_numbers tool
+            # Test multiply_numbers tool
             result = await session.call_tool("multiply_numbers_tool", {"a": 4.5, "b": 2.0})
             print(f"multiply_numbers_tool(4.5, 2.0) = {result.content[0].text}")
             
-            // Test calculate_bmi tool
+            # Test calculate_bmi tool
             result = await session.call_tool("calculate_bmi_tool", {"weight_kg": 70.0, "height_m": 1.75})
             print(f"calculate_bmi_tool(70kg, 1.75m) = {result.content[0].text}")
             
-            // Test get_weather tool
+            # Test get_weather tool
             result = await session.call_tool("get_weather_tool", {"city": "New York"})
             print(f"get_weather_tool('New York') = {result.content[0].text}")
             
-            // Test format_text tool
+            # Test format_text tool
             result = await session.call_tool("format_text_tool", {"text": "hello world", "style": "uppercase"})
             print(f"format_text_tool('hello world', 'uppercase') = {result.content[0].text}")
             
-            // Test get_current_time tool
+            # Test get_current_time tool
             result = await session.call_tool("get_current_time_tool", {"timezone": "UTC"})
             print(f"get_current_time_tool('UTC') = {result.content[0].text}")
             
-            // Test resources
+            # Test resources
             print("\n2. Testing Resources:")
             print("-" * 20)
             
-            // Test config resource
+            # Test config resource
             result = await session.read_resource("config://app")
             print(f"config://app = {result.contents[0].text[:100]}...")
             
-            // Test greeting resource
+            # Test greeting resource
             result = await session.read_resource("greeting://Alice")
             print(f"greeting://Alice = {result.contents[0].text}")
             
-            // Test server info resource
+            # Test server info resource
             result = await session.read_resource("info://server")
             print(f"info://server = {result.contents[0].text[:100]}...")
             
-            // Test math constants resource
+            # Test math constants resource
             result = await session.read_resource("math://constants")
             print(f"math://constants = {result.contents[0].text[:100]}...")
             
-            // Test prompts
+            # Test prompts
             print("\n3. Testing Prompts:")
             print("-" * 20)
             
-            // List available prompts
+            # List available prompts
             prompts = await session.list_prompts()
             print(f"Available prompts: {[p.name for p in prompts.prompts]}")
             
-            // Get a specific prompt
+            # Get a specific prompt
             result = await session.get_prompt("calculator_assistant_prompt")
             print(f"calculator_assistant_prompt = {result.description}")
             
