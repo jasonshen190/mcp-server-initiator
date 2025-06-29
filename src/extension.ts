@@ -406,17 +406,17 @@ def install_dependencies():
 
 def run_server():
     """Run the MCP server"""
-    print("\nStarting the ${folderName} MCP Server...")
+    print("\\nStarting the ${folderName} MCP Server...")
     print("Press Ctrl+C to stop the server")
     try:
         subprocess.run([sys.executable, "demo_server.py"])
     except KeyboardInterrupt:
-        print("\nServer stopped.")
+        print("\\nServer stopped.")
 
 
 def run_test_client():
     """Run the test client"""
-    print("\nRunning test client...")
+    print("\\nRunning test client...")
     try:
         subprocess.run([sys.executable, "test_client.py"])
     except subprocess.CalledProcessError as e:
@@ -438,14 +438,14 @@ def main():
         sys.exit(1)
     
     # Ask user what they want to do
-    print("\nWhat would you like to do?")
+    print("\\nWhat would you like to do?")
     print("1. Run the server")
     print("2. Run the test client")
     print("3. Run both (server in background, then test client)")
     print("4. Exit")
     
     while True:
-        choice = input("\nEnter your choice (1-4): ").strip()
+        choice = input("\\nEnter your choice (1-4): ").strip()
         
         if choice == "1":
             run_server()
@@ -454,7 +454,7 @@ def main():
             run_test_client()
             break
         elif choice == "3":
-            print("\nStarting server in background...")
+            print("\\nStarting server in background...")
             # Start server in background
             server_process = subprocess.Popen([sys.executable, "demo_server.py"])
             try:
@@ -509,7 +509,7 @@ async def test_server():
             print("=" * 50)
             
             # Test tools
-            print("\n1. Testing Tools:")
+            print("\\n1. Testing Tools:")
             print("-" * 20)
             
             # Test add_numbers tool
@@ -537,7 +537,7 @@ async def test_server():
             print(f"get_current_time_tool('UTC') = {result.content[0].text}")
             
             # Test resources
-            print("\n2. Testing Resources:")
+            print("\\n2. Testing Resources:")
             print("-" * 20)
             
             # Test config resource
@@ -557,7 +557,7 @@ async def test_server():
             print(f"math://constants = {result.contents[0].text[:100]}...")
             
             # Test prompts
-            print("\n3. Testing Prompts:")
+            print("\\n3. Testing Prompts:")
             print("-" * 20)
             
             # List available prompts
@@ -568,7 +568,7 @@ async def test_server():
             result = await session.get_prompt("calculator_assistant_prompt")
             print(f"calculator_assistant_prompt = {result.description}")
             
-            print("\n" + "=" * 50)
+            print("\\n" + "=" * 50)
             print("All tests completed successfully!")
 
 
@@ -775,7 +775,7 @@ Run the test client to see all features in action!
 3. Build your own MCP server with custom functionality
 4. Integrate with Claude Desktop or other MCP clients
 `;
-    fs.writeFileSync(path.join(srcPath, 'README.md'), readmeContent);
+    fs.writeFileSync(path.join(basePath, 'README.md'), readmeContent);
 
     // Create requirements.txt
     const requirementsContent = `# MCP Server Dependencies
