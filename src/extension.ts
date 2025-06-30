@@ -2,6 +2,8 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
 
+const GITHUB_OWNER = "jasonshen190";
+
 export function activate(context: vscode.ExtensionContext) {
     console.log('MCP Server Initiator extension is now active!');
 
@@ -271,14 +273,14 @@ A comprehensive example showing tools, resources, and prompts
 """
 
 from mcp.server.fastmcp import FastMCP
-from components.tools import (
+from src.components.tools import (
     add_numbers, multiply_numbers, calculate_bmi, 
     get_weather, format_text, get_current_time, WeatherData
 )
-from components.resources import (
+from src.components.resources import (
     get_app_config, get_greeting, get_server_info, get_math_constants
 )
-from components.prompts import (
+from src.components.prompts import (
     calculator_assistant, weather_assistant, text_formatter
 )
 
@@ -376,10 +378,128 @@ def text_formatter_prompt() -> str:
     return text_formatter()
 
 
-if __name__ == "__main__":
+def main():
     # Run the server on HTTP at 127.0.0.1:8000
-    mcp.run(transport="streamable-http")`;
+    # mcp.run(transport="streamable-http")
+    print("Starting MCP server...")
+    mcp.run()
+
+if __name__ == "__main__":
+    main()`;
     fs.writeFileSync(path.join(srcPath, 'demo_server.py'), demoServerContent);
+
+    // create and empty __init__.py
+    const srcInitContent = ``;
+    fs.writeFileSync(path.join(srcPath, '__init__.py'), srcInitContent);
+
+    // create mcp-local.json
+    const mcpLocalJsonContent = `{
+  "mcpServers": [
+    "local-mcp-server": {
+        "name": "Local MCP Server (streamable-http)",
+        "url": "http://127.0.0.1:8000/mcp",
+        "transport": "streamable-http",
+        "description": "Local development MCP server using streamable-http transport."
+    }
+  ]
+}`;
+    fs.writeFileSync(path.join(srcPath, 'mcp-local.json'), mcpLocalJsonContent);
+
+    // create mcp.json
+    const mcpJsonContent = `{
+  "mcpServers": {
+    "${folderName}": {
+      "command": "~/.local/bin/uvx",
+      "args": ["git+https://github.com/${GITHUB_OWNER}/${folderName}.git@main"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "INFO"
+      },
+      "disabled": false,
+      "autoApprove": []
+    },
+    "awslabs.aws-documentation-mcp-server": {
+      "command": "~/.local/bin/uvx",
+      "args": ["awslabs.aws-documentation-mcp-server@latest"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR",
+        "AWS_DOCUMENTATION_PARTITION": "aws"
+      },
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
+}`;
+    fs.writeFileSync(path.join(srcPath, 'mcp.json'), mcpJsonContent);
+
+    // create .fastmcp.json
+    const fastmcpJsonContent = `{
+    "name": "${GITHUB_OWNER}.${folderName}",
+    "version": "0.0.1",
+    "branch": "main",
+    "entry": "src/demo_server.py",
+    "runtime": "python3",
+    "files": ["src/", "src/components/", "requirements.txt"]
+  }`;
+    fs.writeFileSync(path.join(basePath, '.fastmcp.json'), fastmcpJsonContent);
+
+    // create .gitignore
+    const gitignoreContent = `__pycache__/
+.DS_Store
+.vscode/
+.cursor/
+.cursor/mcp.json
+.venv/
+build/
+${folderName}.egg-info/
+`;
+    fs.writeFileSync(path.join(basePath, '.gitignore'), gitignoreContent);
+
+    // create pyproject.toml
+    const pyprojectTomlContent = `[project]
+name = "${folderName}"
+version = "1.0.0"
+description = "A comprehensive MCP server demonstrating tools, resources, and prompts"
+authors = [
+    { name = "${GITHUB_OWNER}" }
+]
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+
+dependencies = [
+    "mcp[cli]>=1.0.0",
+    "pydantic>=2.0.0",
+    "fastapi>=0.104.0",
+    "uvicorn[standard]>=0.24.0",
+    "requests>=2.28.0",
+    "python-dotenv>=1.0.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0"
+]
+
+[tool.setuptools]
+packages = ["src", "src.components"]
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q"
+testpaths = [
+    "src"
+]
+
+[project.scripts]
+${folderName} = "src.demo_server:main"
+`;
+    fs.writeFileSync(path.join(basePath, 'pyproject.toml'), pyprojectTomlContent);
 
     // Create setup_and_run.py
     const setupAndRunContent = `#!/usr/bin/env python3
@@ -577,95 +697,72 @@ if __name__ == "__main__":
 `;
     fs.writeFileSync(path.join(srcPath, 'test_client.py'), testClientContent);
 
-    // Create mcp.json configuration
-    const mcpJsonContent = `{
-  "mcpServers": {
-    "${folderName}": {
-      "url": "http://127.0.0.1:8000/mcp"
-    }
-  }
-}`;
-    fs.writeFileSync(path.join(srcPath, 'mcp.json'), mcpJsonContent);
-
     // Create README.md
     const readmeContent = `# ${folderName} MCP Server
 
+## Overview
+
+my-mcp-server is a comprehensive example MCP server demonstrating tools, resources, and prompts using the FastMCP framework. It is modular, extensible, and includes structured output, error handling, and async support.
+
+## Local Testing Instructions
+
+If you want to test the server locally after cloning the repository or downloading and unzipping the package:
+
+1. Open \`src/demo_server.py\` and go to lines 114 and 115.
+1. Comment the mcp.run()
+1. Uncomment or update these lines to enable the \`streamable-http\` mode:
+   \`\`\`python
+   # mcp.run(transport="streamable-http")
+   # print("Starting MCP server...")
+   mcp.run(transport="streamable-http")
+   \`\`\`
+1. run by following [Testing with the Client](#testing-with-the-client)
+1. To test with IDEs like Cursor, use the contents in mcp-local.json in ~/.cursor/mcp.json(restart Cursor might be needed)
+
+## Test with Remote(uvx)
+1. Replace Github owner name "${GITHUB_OWNER}" with your own in mcp.json, .fastmcp.json, pyproject.toml
+1. Instead of run the demo_server.py locally, use mcp.json in ~/.cursor/mcp.json to use it as remote MCP server
+
+## Project Structure
+
+\`\`\`
+my-mcp-server/
+├── src/
+│   ├── demo_server.py         # Main MCP server with tool/resource/prompt registration
+│   ├── setup_and_run.py      # Interactive setup and run script
+│   ├── test_client.py        # Async test client for all features
+|   |── mcp-local.json        # local test server configuration
+│   ├── mcp.json              # Server configuration
+│   └── components/
+│       ├── tools.py          # Tool logic and models
+│       ├── resources.py      # Resource logic
+│       ├── prompts.py        # Prompt logic
+│       └── __init__.py
+├── requirements.txt
+├── pyproject.toml
+├── README.md
+\`\`\`
+
 ## Usage
 
-### Running the Server
-
-By default, the server runs on HTTP at 127.0.0.1:8000.
+### Testing the Server locally
 
 #### Method 1: Direct execution
 \`\`\`bash
-python demo_server.py
+python src/demo_server.py
 \`\`\`
 
-#### Method 2: Using MCP CLI
-\`\`\`bash
-mcp run demo_server.py
-\`\`\`
 
-#### Method 3: Development mode with MCP Inspector
+#### Method 2: Interactive Setup (Recommended)
 \`\`\`bash
-mcp dev demo_server.py
-\`\`\`
-
-#### Method 4: Install in Claude Desktop
-\`\`\`bash
-mcp install demo_server.py
-\`\`\`
-
-#### Method 5: Interactive Setup (Recommended)
-\`\`\`bash
-python setup_and_run.py
+python src/setup_and_run.py
 \`\`\`
 
 ### Testing with the Client
 
 Run the test client to see all features in action:
 \`\`\`bash
-python test_client.py
-\`\`\`
-
-This will:
-1. Connect to the server
-2. Test all available tools
-3. Test all available resources
-4. Test all available prompts
-5. Display the results
-
-## Features
-
-### Tools
-- **add_numbers_tool**: Add two integers
-- **multiply_numbers_tool**: Multiply two floating-point numbers
-- **calculate_bmi_tool**: Calculate BMI given weight and height
-- **get_weather_tool**: Get simulated weather data for cities (with structured output)
-- **format_text_tool**: Format text in different styles (uppercase, lowercase, title, reverse)
-- **get_current_time_tool**: Get current time in specified timezone
-
-### Resources
-- **config://app**: Application configuration
-- **greeting://{name}**: Personalized greeting
-- **info://server**: Server information and capabilities
-- **math://constants**: Common mathematical constants
-
-### Prompts
-- **calculator_assistant_prompt**: Assistant for mathematical calculations
-- **weather_assistant_prompt**: Assistant for weather-related queries
-- **text_formatter_prompt**: Assistant for text formatting
-
-## Installation
-
-1. Install the required dependencies:
-\`\`\`bash
-pip install -r requirements.txt
-\`\`\`
-
-Or use the interactive setup script:
-\`\`\`bash
-python setup_and_run.py
+python src/test_client.py
 \`\`\`
 
 ## Example Output
@@ -673,7 +770,7 @@ python setup_and_run.py
 When you run the test client, you should see output like:
 
 \`\`\`
-Connected to ${folderName} MCP Server!
+Connected to my-mcp-server MCP Server!
 ==================================================
 
 1. Testing Tools:
@@ -688,14 +785,14 @@ get_current_time_tool('UTC') = Current time in UTC: 2024-01-15 10:30:45
 2. Testing Resources:
 --------------------
 config://app = {
-  "name": "${folderName}",
+  "name": "my-mcp-server",
   "version": "1.0.0",
   "features": ["tools", "resources", "prompts"],
   "status": "active"
 }...
-greeting://Alice = Hello, Alice! Welcome to the ${folderName} MCP Server.
+greeting://Alice = Hello, Alice! Welcome to the my-mcp-server MCP Server.
 info://server = {
-  "server_name": "${folderName}",
+  "server_name": "my-mcp-server",
   "description": "A comprehensive MCP server demonstrating various features",
   "available_tools": [...]
 }...
@@ -721,59 +818,55 @@ Please help users with their calculations!
 All tests completed successfully!
 \`\`\`
 
+## Features
+
+### Tools
+- **add_numbers_tool(a, b)**: Add two numbers (int)
+- **multiply_numbers_tool(a, b)**: Multiply two numbers (float)
+- **calculate_bmi_tool(weight_kg, height_m)**: Calculate BMI given weight (kg) and height (m)
+- **get_weather_tool(city)**: Get simulated weather data for a city (returns structured WeatherData)
+- **format_text_tool(text, style)**: Format text in different styles (uppercase, lowercase, title, reverse, normal)
+- **get_current_time_tool(timezone)**: Get the current time in the specified timezone (default: UTC)
+
+### Resources
+- **config://app**: Application configuration (name, version, features, status)
+- **greeting://{name}**: Personalized greeting
+- **info://server**: Server information and available features
+- **math://constants**: Common mathematical constants (pi, e, golden_ratio, sqrt_2)
+
+### Prompts
+- **calculator_assistant_prompt**: Assistant for mathematical calculations
+- **weather_assistant_prompt**: Assistant for weather-related queries
+- **text_formatter_prompt**: Assistant for text formatting
+
+## Main Files
+
+- **src/demo_server.py**: Registers all tools, resources, and prompts with FastMCP. Entry point for running the server.
+- **src/setup_and_run.py**: Installs dependencies and interactively runs the server or test client.
+- **src/test_client.py**: Async client that tests all tools, resources, and prompts via HTTP.
+- **src/components/tools.py**: Implements tool logic and the WeatherData model.
+- **src/components/resources.py**: Implements resource logic and returns JSON-encoded data.
+- **src/components/prompts.py**: Implements prompt logic for assistants.
+
 ## Advanced Usage
 
-### Structured Output
-
-The \`get_weather_tool\` demonstrates structured output using Pydantic models. The response includes both human-readable text and machine-readable structured data.
-
-### Error Handling
-
-The server includes basic error handling. For example, the \`calculate_bmi_tool\` will raise a \`ValueError\` if the height is not positive.
-
-### Customization
-
-You can easily extend this server by:
-1. Adding new tools with the \`@mcp.tool()\` decorator
-2. Adding new resources with the \`@mcp.resource()\` decorator
-3. Adding new prompts with the \`@mcp.prompt()\` decorator
-4. Creating custom Pydantic models for structured output
-
-## Transport Options
-
-This server supports multiple transport options:
-- **stdio**: Default for direct execution and CLI tools
-- **SSE**: For web-based clients
-- **Streamable HTTP**: For production deployments
-
-## Server Configuration
-
-The server runs on HTTP at \`http://127.0.0.1:8000/mcp\` and can be configured in \`mcp.json\`.
+- **Structured Output**: \`get_weather_tool\` returns a Pydantic model for structured weather data.
+- **Error Handling**: Tools like \`calculate_bmi_tool\` raise errors for invalid input (e.g., non-positive height).
+- **Customization**: Add new tools/resources/prompts by editing the respective files in \`src/components/\`.
 
 ## Development
 
-This server uses the FastMCP framework and includes:
+- Modular, decoupled design for easy extension and debugging
 - Pydantic models for type safety
 - Async/await support
 - Comprehensive error handling
-- Example tools, resources, and prompts
-
-## Testing
-
-The included test client demonstrates how to:
-- Connect to the MCP server
-- Call tools with parameters
-- Read resources
-- List and get prompts
-
-Run the test client to see all features in action!
 
 ## Next Steps
 
-1. Explore the [MCP Python SDK documentation](https://modelcontextprotocol.io)
-2. Check out more examples in the \`python-sdk/examples/\` directory
-3. Build your own MCP server with custom functionality
-4. Integrate with Claude Desktop or other MCP clients
+- Explore the [MCP Python SDK documentation](https://modelcontextprotocol.io)
+- Build your own MCP server with custom functionality
+- Integrate with Claude Desktop or other MCP clients
+
 `;
     fs.writeFileSync(path.join(basePath, 'README.md'), readmeContent);
 
